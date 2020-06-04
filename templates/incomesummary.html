@@ -1,0 +1,77 @@
+{extends file="layout.html"}
+{block name=title}::: LMS :{$layout.pagetitle|striphtml} :::{/block}
+{block name=module_content}
+    <table class="lmsbox lms-ui-background-cycle">
+        <thead>
+            <tr class="text-center">
+                <th>{trans("Revenues of days in a month")}</th>
+                <th>&nbsp;</th>
+                <th>{trans("Revenue by months of the year")}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="vertical-align:top;text-align:center;">
+                    <form method="get" action="?m=incomesummary&year={$year}&$month={$month}" style="padding:1em; margin: 1em;">
+                        <INPUT TYPE="HIDDEN" NAME="m" VALUE="incomesummary">
+                        <select name="year" style="margin:1em;">
+                            {section name=y max=($currentYear-$firstYear+1) loop=$currentYear+1 step=-1}
+                                <option {if ($smarty.get.year eq $smarty.section.y.index)} selected {/if} value={$smarty.section.y.index}>{$smarty.section.y.index}</option>
+                            {/section}
+                        </select>
+                        <select name="month" style="margin:1em;">
+                            {section name=m start=1 loop=13 step=1}
+                                <option {if ($smarty.get.month eq $smarty.section.m.index)} selected {/if} value={$smarty.section.m.index}>{$smarty.section.m.index}</option>
+                            {/section}
+                        </select>
+                        <INPUT type="submit" style="margin:1em;">
+                    </form>
+                    <table class="lmsbox lms-ui-background-cycle">
+                        <thead>
+                            <tr class="text-center">
+                                <th>{trans("day")}</th>
+                                <th>{trans("income")}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach from=$income item=i}
+                                <tr class="text-center">
+                                    <td>{$i.day}</td>
+                                    <td>{$i.suma} zł</td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                </td>
+                <td>&nbsp;</td>
+                <td style="vertical-align:top;text-align:center;">
+                    <form method="get" action="?m=incomesummary&only_year={$only_year}">
+                        <INPUT TYPE="HIDDEN" NAME="m" VALUE="incomesummary">
+                        <select name="only_year" style="margin:1em;">
+                            {section name=y max=($currentYear-$firstYear+1) loop=$currentYear+1 step=-1}
+                                <option {if ($smarty.get.only_year eq $smarty.section.y.index)} selected {/if} value={$smarty.section.y.index}>{$smarty.section.y.index}</option>
+                            {/section}
+                        </select>
+                        <INPUT type="submit" style="margin:1em;">
+                        <table class="lmsbox lms-ui-background-cycle">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>{trans("month")}</th>
+                                    <th>{trans("income")}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {foreach from=$IncomePerMonth item=i}
+                                    <tr class="text-center">
+                                        <td>{$i.month}</td>
+                                        <td>{$i.suma} zł</td>
+                                    </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{/block}
