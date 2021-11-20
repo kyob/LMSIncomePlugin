@@ -10,14 +10,14 @@ function getFirstYear()
 function MonthlyIncome($year, $month)
 {
     $db = LMSDB::getInstance();
-    $income = $db->GetAll('SELECT SUM(value) AS suma, DAY(FROM_UNIXTIME(time)) as day FROM cash WHERE value>0 AND YEAR(FROM_UNIXTIME(time))=' . $year . ' AND MONTH(FROM_UNIXTIME(time))=' . $month . ' GROUP BY DAY(FROM_UNIXTIME(time))');
+    $income = $db->GetAll("SELECT SUM(value) AS suma, EXTRACT('DAY' FROM to_timestamp(time)) as day FROM cash WHERE value>0 AND EXTRACT('YEAR' FROM to_timestamp(time))=" . $year . " AND EXTRACT('MONTH' FROM to_timestamp(time))=" . $month . " GROUP BY EXTRACT('DAY' FROM to_timestamp(time)) ORDER by day");
     return $income;
 }
 
 function IncomePerMonth($only_year)
 {
     $db = LMSDB::getInstance();
-    $income = $db->GetAll('SELECT MONTH(FROM_UNIXTIME(time)) as month, SUM(value) AS suma FROM cash WHERE value>0 AND YEAR(FROM_UNIXTIME(time))=' . $only_year . ' GROUP BY month(FROM_UNIXTIME(time))');
+    $income = $db->GetAll("SELECT EXTRACT(MONTH FROM to_timestamp(time)) as month, SUM(value) AS suma FROM cash WHERE value>0 AND EXTRACT(YEAR FROM to_timestamp(time))=" . $only_year . " GROUP BY EXTRACT(MONTH FROM to_timestamp(time)) ORDER by month");
     return $income;
 }
 
