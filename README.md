@@ -1,24 +1,11 @@
-# LMS Income plugin
+# LMSIncomePlugin
 
-Show income per days in month and per months per year
+Zbiorcze przedstawienie przychodu z podziałem na dni w ujęciu miesięcznym oraz na miesiące w ujęciu rocznym.
 
-## Requirements
+## Instalacja 
 
-Installed [LMS](https://lms.org.pl/) or [LMS-PLUS](https://lms-plus.org) (recommended).
+* Aktywuj plugin w zakładce `Konfiguracja => Wtyczki`
 
-## Installation
+## Uwagi
 
-* Copy files to `<path-to-lms>/plugins/`
-* Run `composer update` or `composer update --no-dev`
-* Go to LMS website and activate it `Configuration => Plugins`
-
-## Configuration
-
-None.
-
-## Usage
-
-* Go to LMS side menu `finance` section.
-
-## Donations :)
-https://github.com/kyob
+* Stara prowizorka przepisana na plugin nie odpowiadam za poniesione straty moralne :)

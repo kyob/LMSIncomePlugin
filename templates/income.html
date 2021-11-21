@@ -1,0 +1,83 @@
+{extends file="layout.html"}
+{block name=title}::: LMS :{$layout.pagetitle|striphtml} :::{/block}
+{block name=module_content}
+<br>
+    <table class="lmsbox lms-ui-background-cycle">
+        <thead>
+            <tr>
+                <th>{t}Revenues of days in a month{/t}</th>
+                <th>{t}Revenue by months of the year{/t}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="vertical-align:top">
+                    <form method="get" name="formpbx" action="?m=income&year={$year}&$month={$month}">
+                        <INPUT TYPE="HIDDEN" NAME="m" VALUE="income">
+                        <select size="1" name="year">
+                            {section name=y max=($currentYear-$firstYear+1) loop=$currentYear+1 step=-1}
+                                <option {if ($smarty.get.year eq $smarty.section.y.index)} selected {/if}
+                                    value={$smarty.section.y.index}>{$smarty.section.y.index}</option>
+                            {/section}
+                        </select>
+
+                        <select size="1" name="month">
+                            {section name=m start=1 loop=13 step=1}
+                                <option {if ($smarty.get.month eq $smarty.section.m.index)} selected {/if}
+                                    value={$smarty.section.m.index}>{$smarty.section.m.index}</option>
+                            {/section}
+                        </select>
+
+                        <INPUT type="submit">
+                    </form>
+
+                    <table class="lmsbox lms-ui-background-cycle">
+                        <thead>
+                            <tr>
+                                <th>{t}day{/t}</th>
+                                <th>{t}income{/t}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach from=$income item=i}
+                                <tr>
+                                    <td>{$i.day}</td>
+                                    <td>{$i.suma} zł</td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                </td>
+                <td style="vertical-align:top">
+                    <form method="get" name="formpbx2" action="?m=income&only_year={$only_year}">
+                        <INPUT TYPE="HIDDEN" NAME="m" VALUE="income">
+                        <select size="1" name="only_year">
+                            {section name=y max=($currentYear-$firstYear+1) loop=$currentYear+1 step=-1}
+                                <option {if ($smarty.get.only_year eq $smarty.section.y.index)} selected {/if}
+                                    value={$smarty.section.y.index}>{$smarty.section.y.index}</option>
+                            {/section}
+                        </select>
+                        <INPUT type="submit">
+
+                        <table class="lmsbox lms-ui-background-cycle">
+                            <thead>
+                                <tr>
+                                    <th>{t}month{/t}</th>
+                                    <th>{t}income{/t}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {foreach from=$IncomePerMonth item=i}
+                                    <tr>
+                                        <td>{$i.month}</td>
+                                        <td>{$i.suma} zł</td>
+                                    </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{/block}
