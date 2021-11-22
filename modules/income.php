@@ -16,6 +16,7 @@ function MonthlyIncome($year, $month) {
                          FROM cash
                          WHERE importid IS NOT NULL AND value>0 AND EXTRACT(YEAR FROM to_timestamp(time))=' . $year . ' AND EXTRACT(MONTH FROM to_timestamp(time))=' . $month . '
                          GROUP BY EXTRACT(DAY FROM to_timestamp(time))
+                         ORDER BY day
     ');
     return $income;
 }
@@ -24,7 +25,7 @@ function IncomePerMonth($only_year) {
     global $LMS, $SMARTY, $SESSION;
     $db = LMSDB::getInstance();
 
-    $income = $db->GetAll('SELECT EXTRACT(MONTH FROM to_timestamp(time)) AS month, SUM(value) AS suma FROM cash WHERE importid IS NOT NULL AND value>0 AND EXTRACT(YEAR FROM to_timestamp(time))=' . $only_year . ' GROUP BY EXTRACT(MONTH FROM to_timestamp(time))');
+    $income = $db->GetAll('SELECT EXTRACT(MONTH FROM to_timestamp(time)) AS month, SUM(value) AS suma FROM cash WHERE importid IS NOT NULL AND value>0 AND EXTRACT(YEAR FROM to_timestamp(time))=' . $only_year . ' GROUP BY EXTRACT(MONTH FROM to_timestamp(time)) ORDER BY month');
     return $income;
 }
 
